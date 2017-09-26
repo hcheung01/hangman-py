@@ -41,10 +41,8 @@ def getGuessedWord(secretWord, lettersGuessed):
     returnedWordArr = []
     returnedWord = ""
     secretWordArr = list(secretWord)
-    # Replace SecretWord with '_'.
     for letter in secretWord:
         returnedWordArr.append("_")
-    # Replace '_' with correctly guessed letters
     for letter in lettersGuessed:
         if letter in secretWordArr:
             if secretWord.count(letter) == 1:
@@ -74,34 +72,31 @@ def hangman(secretWord):
     # FILL IN YOUR CODE HERE...
     lettersGuessed = []
     guessesLeft = 7
-    print("Welcome! Guess the Secret Word?")
-    # How many letters are there left to guess?
+    print("Time to guess the Secret Word?")
     while guessesLeft > 0 and not isWordGuessed(secretWord, lettersGuessed):
         lettersLeft = str((getGuessedWord(secretWord, lettersGuessed).count("_")))
-        print("Secret Word Progress (There are " + str(lettersLeft) + " letters left): " + getGuessedWord(secretWord, lettersGuessed))
-        # Get User Letter Guess
+        print("Secret Word Progress (Just " + str(lettersLeft) + " letters left): " + getGuessedWord(secretWord, lettersGuessed))
         userLetterGuess = ''
         while not userLetterGuess.isalpha():
             userLetterGuess = raw_input("Guess a letter ('?' to see letters already guessed): ")
             if(len(userLetterGuess) > 1):
                 userLetterGuess = ''
             elif(userLetterGuess in lettersGuessed):
-                print("You guessed that letter already")
+                print("You guessed that already")
                 userLetterGuess = ''
             elif(userLetterGuess == "?"):
                 print("".join(lettersGuessed))
-        # Add UserGuess to LettersGuessed
         lettersGuessed.append(userLetterGuess)
         if userLetterGuess in secretWord:
-            print("Yes! '" + userLetterGuess + "' is in the Secret Word!")
+            print("Got it! '" + userLetterGuess + "' is in the Secret Word!")
             if isWordGuessed(secretWord, lettersGuessed):
-                print("You guessed the Word " + secretWord + "! Congrats!")
+                print("Congrats, you guessed the Word " + secretWord)
         else:
             guessesLeft -= 1
             if guessesLeft > 0:
-                print("Guess Again! You have " + str(guessesLeft) + " guesses left.")
+                print("You have " + str(guessesLeft) + " guesses left.")
             else:
-                print("Failed! The word was " + secretWord + "...")
+                print("Sorry, the word was " + secretWord + "...")
 
 
 secretWord = loadWord()
